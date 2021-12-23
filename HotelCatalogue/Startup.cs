@@ -32,7 +32,19 @@ namespace HotelCatalogue
             {
                 options.UseSqlServer(Configuration.GetConnectionString("con"));
             });
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
+
             services.AddControllers();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelCatalogue", Version = "v1" });
@@ -50,6 +62,8 @@ namespace HotelCatalogue
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 
