@@ -1,3 +1,4 @@
+using HotelCatalogue.Configurations;
 using HotelCatalogue.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,8 @@ namespace HotelCatalogue
                     .AllowAnyHeader();
                 });
             });
+
+            services.AddAutoMapper(typeof(MapperInitializer));
 
             services.AddControllers();
             
