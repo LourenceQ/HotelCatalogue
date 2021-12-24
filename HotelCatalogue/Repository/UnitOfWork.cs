@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HotelCatalogue.Repository
 {
-    public class UnitOfWork : IUnityOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly DatabaseContext _context;
         private IGenericRepository<Country> _countries;

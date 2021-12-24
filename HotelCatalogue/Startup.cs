@@ -1,5 +1,7 @@
 using HotelCatalogue.Configurations;
 using HotelCatalogue.Data;
+using HotelCatalogue.IRepository;
+using HotelCatalogue.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -51,6 +53,13 @@ namespace HotelCatalogue
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelCatalogue", Version = "v1" });
+            });
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            services.AddControllers().AddNewtonsoftJson(options => 
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
         }
 
