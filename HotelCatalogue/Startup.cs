@@ -37,6 +37,8 @@ namespace HotelCatalogue
 
             services.ConfigureIdentity();
 
+            services.ConfigureJWT(Configuration);
+
             services.AddDbContext<DatabaseContext>(options => 
             {
                 options.UseSqlServer(Configuration.GetConnectionString("con"));
