@@ -2,6 +2,7 @@ using HotelCatalogue.Configurations;
 using HotelCatalogue.Data;
 using HotelCatalogue.IRepository;
 using HotelCatalogue.Repository;
+using HotelCatalogue.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,16 +32,15 @@ namespace HotelCatalogue
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-
-            services.AddAuthentication();
-
-            services.ConfigureIdentity();
-
+        {     
             services.AddDbContext<DatabaseContext>(options => 
             {
                 options.UseSqlServer(Configuration.GetConnectionString("con"));
             });
+
+            services.AddAuthentication();
+
+            services.ConfigureIdentity();
 
             services.AddCors(c =>
             {
@@ -62,6 +62,8 @@ namespace HotelCatalogue
             });
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IAuthManager, AuthManager>();
 
             services.AddControllers().AddNewtonsoftJson(options => 
             {
