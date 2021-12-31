@@ -42,6 +42,8 @@ namespace HotelCatalogue
 
             services.ConfigureIdentity();
 
+            services.ConfigureJWT(Configuration);
+
             services.AddCors(c =>
             {
                 c.AddPolicy("CorsPolicy", builder =>
