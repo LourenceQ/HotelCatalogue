@@ -17,7 +17,7 @@ namespace HotelCatalogue
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File(
                     path: "D:\\HotelCatalogueLogs\\log-.txt",
-                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message: lj}{NewLine}{Exception}",
+                    outputTemplate: "\n{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message: lj}{NewLine}{Exception}",
                     rollingInterval: RollingInterval.Day,
                     restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information
                     ).CreateLogger();
@@ -40,6 +40,7 @@ namespace HotelCatalogue
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
