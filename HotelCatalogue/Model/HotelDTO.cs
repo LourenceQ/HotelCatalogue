@@ -20,6 +20,7 @@ namespace HotelCatalogue.Model
         [Range(1,5)]
         public Double Rating { get; set; }
        
+        [Required]
         public int CountryId { get; set; }
     }
 
