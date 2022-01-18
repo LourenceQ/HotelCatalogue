@@ -32,11 +32,11 @@ namespace HotelCatalogue.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetAllCountries()
+        public async Task<IActionResult> GetAllCountries([FromQuery] RequestParams requestParams)
         {
             try
             {
-                var countries = await _unityOfWork.Countries.GetAll();
+                var countries = await _unityOfWork.Countries.GetPagedList(requestParams);
                 var results = _mapper.Map<List<CountryDTO>>(countries);
                 return Ok(results);
             }
