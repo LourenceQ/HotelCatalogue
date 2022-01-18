@@ -19,8 +19,8 @@ namespace HotelCatalogue.Data
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new HotelConfiguration());
             builder.ApplyConfiguration(new CountryConfiguration());
+            builder.ApplyConfiguration(new HotelConfiguration());            
             builder.ApplyConfiguration(new RoleConfiguration());
         }
 
