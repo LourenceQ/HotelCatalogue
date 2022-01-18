@@ -120,5 +120,36 @@ namespace HotelCatalogue.Controllers
             }
         }
 
+        [Authorize]
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteHotel(int id)
+        {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid POST attempt in {nameof(DeleteHotel)}");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var hotel = await _unityOfWork.Hotels.Get(q => q.Id == id);
+                if (hotel == null)
+                {
+                    _logger.LogError($"Invalid POST attempt in {nameof(DeleteHotel)}");
+                    return BadRequest("Submitted data is invalid");
+                }
+               
+                await _unityOfWork.Hotels.Delete(id);
+                await _unityOfWork.Save();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong int the {nameof(DeleteHotel)}");
+                return StatusCode(500, "Internal Server Error. Please try again later.");
+            }
+        }
+
     }
 }

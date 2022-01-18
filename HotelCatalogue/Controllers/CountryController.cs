@@ -119,5 +119,36 @@ namespace HotelCatalogue.Controllers
                 return StatusCode(500, "Internal Server Error. Please try again later.");
             }
         }
+
+        [Authorize]
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteCountry(int id)
+        {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid POST attempt in {nameof(DeleteCountry)}");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var country = await _unityOfWork.Countries.Get(q => q.Id == id);
+                if (country == null)
+                {
+                    _logger.LogError($"Invalid POST attempt in {nameof(DeleteCountry)}");
+                    return BadRequest("Submitted data is invalid");
+                }
+
+                await _unityOfWork.Countries.Delete(id);
+                await _unityOfWork.Save();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong int the {nameof(DeleteCountry)}");
+                return StatusCode(500, "Internal Server Error. Please try again later.");
+            }
+        }
     }
 }
