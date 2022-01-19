@@ -74,19 +74,12 @@ namespace HotelCatalogue.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
+            
                 var hotel = _mapper.Map<Hotel>(hotelDTO);
                 await _unityOfWork.Hotels.Insert(hotel);
                 await _unityOfWork.Save();
 
-                return CreatedAtRoute("GetHotel", new { id = hotel.Id}, hotel);
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError(ex, $"Something went wrong int the {nameof(CreateHotel)}");
-                return StatusCode(500, "Internal Server Error. Please try again later.");
-            }
+                return CreatedAtRoute("GetHotel", new { id = hotel.Id}, hotel);           
         }
 
         [Authorize]
@@ -99,8 +92,7 @@ namespace HotelCatalogue.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
+            
                 var hotel = await _unityOfWork.Hotels.Get(q => q.Id == id);
                 if(hotel == null)
                 {
@@ -111,13 +103,7 @@ namespace HotelCatalogue.Controllers
                 _unityOfWork.Hotels.Update(hotel);
                 await _unityOfWork.Save();
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Something went wrong int the {nameof(UpdateHotel)}");
-                return StatusCode(500, "Internal Server Error. Please try again later.");
-            }
+                return NoContent();           
         }
 
         [Authorize]
@@ -130,8 +116,7 @@ namespace HotelCatalogue.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
+            
                 var hotel = await _unityOfWork.Hotels.Get(q => q.Id == id);
                 if (hotel == null)
                 {
@@ -142,13 +127,7 @@ namespace HotelCatalogue.Controllers
                 await _unityOfWork.Hotels.Delete(id);
                 await _unityOfWork.Save();
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Something went wrong int the {nameof(DeleteHotel)}");
-                return StatusCode(500, "Internal Server Error. Please try again later.");
-            }
+                return NoContent();            
         }
 
     }
