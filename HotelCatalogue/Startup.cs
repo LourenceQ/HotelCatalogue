@@ -47,7 +47,7 @@ namespace HotelCatalogue
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelCatalogue", Version = "v1" });
-            });
+            });            
 
             services.AddCors(c =>
             {
@@ -83,6 +83,8 @@ namespace HotelCatalogue
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelCatalogue v1"));
             }
+
+            app.ConfigureExceptionHandler();
 
             app.UseHttpsRedirection();
 
