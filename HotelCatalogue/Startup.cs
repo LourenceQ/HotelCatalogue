@@ -70,7 +70,7 @@ namespace HotelCatalogue
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
 
-
+            services.ConfigureVersioning();
 
         }
 
